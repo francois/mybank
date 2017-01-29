@@ -1,0 +1,15 @@
+<h1>Nouvelle transaction</h1>
+<h2><%= @vm.person_name %>, le <%= @vm.today %></h2>
+
+<form method="post" action="/transactions/<%= @vm.person_id %>">
+  <div>
+    <label>Date <input name="transaction[posted_on]" type="date" value="<%= @vm.today %>" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" required></label>
+  </div>
+  <div>
+    <label>Description <input name="transaction[description]" type="text" inputmode="latin" required placeholder="Retrait pour payer une gomme"></label>
+  </div>
+  <div>
+    <label>Montant <input name="transaction[amount]" type="number" inputmode="numeric" placeholder="-0,58" required step="0.01"></label>
+  </div>
+  <button type="submit">Enregistrer la transaction</button>
+</form>

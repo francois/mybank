@@ -10,9 +10,11 @@ end
 $LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
 
 require "home_view"
-require "statement_view"
 require "new_revenue_view"
+require "new_transaction_view"
 require "record_new_revenue"
+require "record_new_transaction"
+require "statement_view"
 
 configure do
   TZ = TZInfo::Timezone.get("America/Montreal")
@@ -35,7 +37,9 @@ get "/transactions/:child_id/new-revenue" do |child_id|
   erb :new_revenue, layout: :application
 end
 
-get "/transactions/:child_id/new" do
+get "/transactions/:child_id/new" do |child_id|
+  @vm = NewTransactionView.new(DB, TZ).call(child_id: Integer(child_id))
+  erb :new_transaction, layout: :application
 end
 
 post "/revenues/:child_id" do |child_id|
@@ -49,7 +53,14 @@ post "/revenues/:child_id" do |child_id|
   redirect "/"
 end
 
-post "/transactions/:child_id" do
+post "/transactions/:child_id" do |child_id|
+  transaction = params["transaction"]
+
+  RecordNewTransaction.new(DB, TZ).call(
+    child_id: Integer(child_id),
+    description: transaction["description"],
+    amount: BigDecimal(transaction["amount"]),
+    posted_on: Date.parse(transaction["posted_on"]))
   redirect "/"
 end
 
