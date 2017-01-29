@@ -1,12 +1,15 @@
-<h1>État des soldes en date du <%= @vm.today %></h1>
-<div>
-  <% @vm.each_child_and_balance do |child, balance| %>
-    <div style="float:left;width:40%;margin:0 16px 0 16px">
-      <h2><%= child.name %></h2>
-      <h3>Balance: <%= format_amount balance %></h3>
-      <a class="btn btn-small" href="/transactions/<%= child.id %>">État de compte</a>
-      <a class="btn btn-small" href="/transactions/<%= child.id %>/new-revenue">Inscrire un revenu</a>
-      <a class="btn btn-small" href="/transactions/<%= child.id %>/new">Ajouter une transaction</a>
-    </div>
-  <% end %>
+<div class="col-sm-12">
+  <h1>État des soldes</h1>
+  <h2><%= @vm.today %></h1>
+  <div class="row">
+    <% @vm.each_child_and_balance do |child, balance| %>
+      <div class="col-md-6">
+        <h3><%= child.name %></h3>
+        <h4>Solde du compte: <%= format_amount balance %></h4>
+        <a class="btn btn-small" href="/transactions/<%= child.id %>">État de compte</a>
+        <a class="btn btn-small" href="/transactions/<%= child.id %>/new-revenue">Inscrire un revenu</a>
+        <a class="btn btn-small" href="/transactions/<%= child.id %>/new">Inscrire une transaction manuelle</a>
+      </div>
+    <% end %>
+  </div>
 </div>

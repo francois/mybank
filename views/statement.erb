@@ -1,27 +1,32 @@
-<h1>État de compte</h1>
-<h2><%= @vm.person_name %>, le <%= @vm.today %></h2>
+<div class="col-sm-12">
+  <h1>État de compte</h1>
+  <h2><%= @vm.person_name %> <%= @vm.today %></h2>
 
-<table>
-  <thead>
-    <tr>
-      <th>Date</h2>
-      <th>Description</th>
-      <th>Montant</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @vm.each_transaction do |transaction| %>
+  <table class="table table-condensed">
+    <col width="30%">
+    <col>
+    <col width="20%">
+    <thead>
       <tr>
-        <td><%= transaction.posted_on %></td>
-        <td><%= transaction.description %></td>
-        <td class="amount"><%= format_amount transaction.amount %></td>
+        <th>Date</h2>
+        <th>Description</th>
+        <th>Montant</th>
       </tr>
-    <% end %>
-  </tbody>
-  <tfoot>
-    <tr>
-      <th colspan="2" scope="row">Solde</th>
-      <td><%= format_amount @vm.balance %></td>
-    </tr>
-  </tfoot>
-</table>
+    </thead>
+    <tbody>
+      <% @vm.each_transaction do |transaction| %>
+        <tr>
+          <td><%= transaction.posted_on %></td>
+          <td><%= transaction.description %></td>
+          <td align="right"><%= format_amount transaction.amount %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="2" scope="row">Solde</th>
+        <td align="right"><%= format_amount @vm.balance %></td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
