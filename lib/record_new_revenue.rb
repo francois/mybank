@@ -13,7 +13,7 @@ class RecordNewRevenue
     db[:public__transactions].insert(
       child_id: child_id,
       amount: unit_amount * count,
-      posted_at: posted_on,
-      description: "#{count} tâches complétées à #{unit_amount.to_s("F")}#{NBSP}$")
+      posted_on: posted_on,
+      description: sprintf("%d tâches complétées à %.2f%s$/tâche", count, unit_amount, NBSP))
   end
 end

@@ -12,7 +12,7 @@
   <tbody>
     <% @vm.each_transaction do |transaction| %>
       <tr>
-        <td><span title="<%= transaction.posted_at.strftime("%Y-%m-%d %H:%M:%S") %>"><%= transaction.posted_on %></span></td>
+        <td><%= transaction.posted_on %></td>
         <td><%= transaction.description %></td>
         <td class="amount"><%= format_amount transaction.amount %></td>
       </tr>

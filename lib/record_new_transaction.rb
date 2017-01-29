@@ -11,7 +11,7 @@ class RecordNewTransaction
     db[:public__transactions].insert(
       child_id: child_id,
       amount: amount,
-      posted_at: posted_on,
+      posted_on: posted_on,
       description: description)
   end
 end
