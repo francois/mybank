@@ -1,0 +1,15 @@
+<h1>Nouveau revenu</h1>
+<h2><%= @vm.person_name %>, le <%= @vm.today %></h2>
+
+<form method="post" action="/revenues/<%= @vm.person_id %>">
+  <div>
+    <label>Date <input name="revenue[posted_on]" type="date" value="<%= @vm.today %>" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" required></label>
+  </div>
+  <div>
+    <label>Nombre de tâches <input name="revenue[count]" type="number" inputmode="numeric" min="1" placeholder="3" required></label>
+  </div>
+  <div>
+    <label>Taux unitaire <input name="revenue[unit_amount]" type="number" inputmode="numeric" placeholder="4.34" required step="0.01"></label>
+  </div>
+  <button type="submit">Enregistrer le revenu</button>
+</form>
