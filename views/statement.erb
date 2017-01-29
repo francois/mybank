@@ -1,0 +1,27 @@
+<h1>État de compte</h1>
+<h2><%= @vm.person_name %>, le <%= @vm.today %></h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</h2>
+      <th>Description</th>
+      <th>Montant</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @vm.each_transaction do |transaction| %>
+      <tr>
+        <td><span title="<%= transaction.posted_at.strftime("%Y-%m-%d %H:%M:%S") %>"><%= transaction.posted_on %></span></td>
+        <td><%= transaction.description %></td>
+        <td class="amount"><%= format_amount transaction.amount %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th colspan="2" scope="row">Solde</th>
+      <td><%= format_amount @vm.balance %></td>
+    </tr>
+  </tfoot>
+</table>

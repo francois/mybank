@@ -10,3 +10,4 @@ gem "sequel"
 gem "sequel_pg", require: false
 gem "sinatra"
 gem "thin"
+gem "tzinfo"
