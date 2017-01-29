@@ -1,9 +1,9 @@
 class NewRevenuePresenter
-  def initialize(person:, today:)
-    @person, @today = person, today
+  def initialize(person:, today:, title:)
+    @person, @today, @title = person, today, title
   end
 
-  attr_reader :person, :today
+  attr_reader :person, :today, :title
 
   def person_id
     person.id

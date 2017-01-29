@@ -13,6 +13,6 @@ class NewTransactionView
     person = Person.new(id: child.fetch(:id), name: child.fetch(:name))
     today  = tz.now.to_date
 
-    NewRevenuePresenter.new(person: person, today: today)
+    NewRevenuePresenter.new(person: person, today: today, title: "Inscrire une transaction manuelle")
   end
 end

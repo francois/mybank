@@ -1,3 +1,5 @@
+# coding: utf-8
+
 class HomePresenter
   def initialize(children:, balances:, today:)
     @children = children
@@ -12,5 +14,9 @@ class HomePresenter
       balance = balances.fetch(child.id, BigDecimal(0))
       yield child, balance
     end
+  end
+
+  def title
+    "État des soldes"
   end
 end

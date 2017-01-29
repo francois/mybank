@@ -1,3 +1,5 @@
+# coding: utf-8
+
 class StatementPresenter
   def initialize(person:, today:, transactions:)
     @person       = person
@@ -17,5 +19,9 @@ class StatementPresenter
 
   def each_transaction(&block)
     transactions.each(&block)
+  end
+
+  def title
+    "État de compte : #{person.name}"
   end
 end
