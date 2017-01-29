@@ -22,6 +22,12 @@ configure do
   DB.run DB["SET timezone TO ?", TZ.name].sql
 end
 
+configure :production do
+  use Rack::Auth::Basic, "Ma Banque" do |username, password|
+    username == ENV.fetch("BASIC_AUTH_USERNAME") and password == ENV.fetch("BASIC_AUTH_PASSWORD")
+  end
+end
+
 get "/" do
   @vm = HomeView.new(DB, TZ).call
   erb :home, layout: :application
