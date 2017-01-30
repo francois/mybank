@@ -1,5 +1,6 @@
 # coding: utf-8
 require "base_action"
+require "bigdecimal"
 
 class ApplyPerChildInterests < BaseAction
   def call
@@ -15,6 +16,11 @@ class ApplyPerChildInterests < BaseAction
       child_id  = row.fetch(:child_id)
       balance   = row.fetch(:balance)
       interest  = balance * rate / 365
+      if interest < 0 then
+        interest = BigDecimal("-0.01") if interest > BigDecimal("-0.01")
+      else
+        interest = BigDecimal("0.01") if interest < BigDecimal("0.01")
+      end
 
       [family_id,
        child_id,
