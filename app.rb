@@ -66,6 +66,7 @@ end
 
 helpers do
   def format_amount(amount)
-    amount ? sprintf("%.2f%s$", amount, NBSP) : ""
+    real_amount = amount || BigDecimal(0)
+    sprintf("%.2f%s$", real_amount, NBSP)
   end
 end
