@@ -1,13 +1,14 @@
 # coding: utf-8
 
 class HomePresenter
-  def initialize(children:, balances:, today:)
+  def initialize(family_id:, children:, balances:, today:)
+    @family_id = family_id
     @children = children
     @balances = balances
     @today = today
   end
 
-  attr_reader :children, :balances, :today
+  attr_reader :children, :balances, :today, :family_id
 
   def each_child_and_balance
     children.each do |child|

@@ -3,8 +3,8 @@ require "statement_presenter"
 require "transaction"
 
 class StatementView < BaseAction
-  def call(child_id:)
-    person = find_person_with_id(child_id)
+  def call(family_id:, child_id:)
+    person = find_person_with_id(family_id: family_id, id: child_id)
 
     txns = db[:public__transactions].filter(child_id: child_id).order(:posted_on, :created_at).all
     transactions = txns.map do |txn|

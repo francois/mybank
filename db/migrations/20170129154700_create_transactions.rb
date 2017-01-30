@@ -2,8 +2,8 @@ Sequel.migration do
   up do
     run <<-EOSQL.gsub(/^ {6}/, "").chomp
       CREATE TABLE public.transactions(
-          id serial not null primary key
-        , child_id int not null
+          id uuid not null primary key default uuid_generate_v4()
+        , child_id uuid not null
         , posted_on date not null
         , amount numeric not null
         , description text

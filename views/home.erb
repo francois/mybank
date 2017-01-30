@@ -6,9 +6,9 @@
       <div class="col-md-6">
         <h3><%= child.name %></h3>
         <h4>Solde du compte: <%= format_amount balance %></h4>
-        <a class="btn btn-small" href="/transactions/<%= child.id %>">État de compte</a>
-        <a class="btn btn-small" href="/transactions/<%= child.id %>/new-revenue">Inscrire un revenu</a>
-        <a class="btn btn-small" href="/transactions/<%= child.id %>/new">Inscrire une transaction manuelle</a>
+        <a class="btn btn-small" href="/<%= @vm.family_id %>/transactions/<%= child.id %>">État de compte</a>
+        <a class="btn btn-small" href="/<%= @vm.family_id %>/transactions/<%= child.id %>/new-revenue">Inscrire un revenu</a>
+        <a class="btn btn-small" href="/<%= @vm.family_id %>/transactions/<%= child.id %>/new">Inscrire une transaction manuelle</a>
       </div>
     <% end %>
   </div>

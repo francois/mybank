@@ -5,6 +5,10 @@ class NewRevenuePresenter
 
   attr_reader :person, :today, :title, :task_rate
 
+  def family_id
+    person.family_id
+  end
+
   def person_id
     person.id
   end
