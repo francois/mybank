@@ -5,9 +5,9 @@ class ApplyPerChildInterests < BaseAction
   # Applies interest for Date.today (which is probably in UTC time)
   def call
     ds = db[:public__transactions].
-      group_by(:child_id).
-      select{ [child_id, sum(amount)] }.
-      from_self.select(:child_id, :sum___balance)
+      group_by(:family_id, :child_id).
+      select{ [family_id, child_id, sum(amount)] }.
+      from_self.select(:family_id, :child_id, :sum___balance)
 
     interests = ds.map do |row|
       rate = 0.1 # TODO: Make configurable
