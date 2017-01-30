@@ -3,7 +3,7 @@ class NewRevenuePresenter
     @person, @today, @title = person, today, title
   end
 
-  attr_reader :person, :today, :title
+  attr_reader :person, :today, :title, :task_rate
 
   def person_id
     person.id
@@ -11,5 +11,9 @@ class NewRevenuePresenter
 
   def person_name
     person.name
+  end
+
+  def task_rate
+    person.task_rate
   end
 end

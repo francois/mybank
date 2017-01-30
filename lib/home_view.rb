@@ -12,7 +12,7 @@ class HomeView
   def call
     children = db[:public__children].
       order{ lower(name) }.
-      map{|row| Person.new(id: row.fetch(:id), name: row.fetch(:name))}
+      map{|row| Person.new(id: row.fetch(:id), name: row.fetch(:name), task_rate: row.fetch(:task_rate))}
 
     balances = db[:public__transactions].
       group_by(:child_id).

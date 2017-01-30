@@ -56,7 +56,6 @@ post "/revenues/:child_id" do |child_id|
   RecordNewRevenue.new(DB, TZ).call(
     child_id: Integer(child_id),
     count: Integer(revenue["count"]),
-    unit_amount: BigDecimal(revenue["unit_amount"]),
     posted_on: Date.parse(revenue["posted_on"]))
   redirect "/"
 end

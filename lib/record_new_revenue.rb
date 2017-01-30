@@ -7,11 +7,14 @@ class RecordNewRevenue
 
   attr_reader :db, :tz
 
-  def call(child_id:, unit_amount:, count:, posted_on:)
+  def call(child_id:, count:, posted_on:)
+    rate = db[:public__children].filter(id: child_id).select_map(:task_rate).first
+    raise ArgumentError, "Unknown child: #{child_id.inspect}" unless rate
+
     db[:public__transactions].insert(
       child_id: child_id,
-      amount: unit_amount * count,
+      amount: rate * count,
       posted_on: posted_on,
-      description: sprintf("%d tâches complétées à %.2f%s$/tâche", count, unit_amount, NBSP))
+      description: sprintf("%d tâches complétées à %.2f%s$/tâche", count, rate, NBSP))
   end
 end
