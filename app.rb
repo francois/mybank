@@ -72,6 +72,6 @@ end
 
 helpers do
   def format_amount(amount)
-    sprintf "%.2f", amount
+    amount ? sprintf("%.2f", amount) : ""
   end
 end
