@@ -1,11 +1,9 @@
-class RecordNewTransaction
-  def initialize(db, tz)
-    @db, @tz = db, tz
-  end
+require "base_action"
 
-  attr_reader :db, :tz
-
+class RecordNewTransaction < BaseAction
   def call(child_id:, amount:, description:, posted_on:)
+    person = find_person_with_id(child_id)
+
     db[:public__transactions].insert(
       child_id: child_id,
       amount: amount,
