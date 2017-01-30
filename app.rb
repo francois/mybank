@@ -9,20 +9,13 @@ end
 
 $LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
 
-NBSP = " " # non-breaking space
-
+require "env"
 require "home_view"
 require "new_revenue_view"
 require "new_transaction_view"
 require "record_new_revenue"
 require "record_new_transaction"
 require "statement_view"
-
-configure do
-  TZ = TZInfo::Timezone.get("America/Montreal")
-  DB = Sequel.connect(ENV.fetch("DATABASE_URL"))
-  DB.run DB["SET timezone TO ?", TZ.name].sql
-end
 
 configure :production do
   use Rack::Auth::Basic, "Ma Banque" do |username, password|
