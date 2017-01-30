@@ -1,0 +1,13 @@
+<div class="col-sm-12">
+  <h1>Changer le salaire</h1>
+  <h2><%= @vm.person_name %></h2>
+
+  <form method="post" action="/<%= @vm.family_id %>/person/<%= @vm.child_id %>">
+    <div class="form-group">
+      <label for="person_task_rate">Salaire par tâche</label>
+      <input  id="person_task_rate" class="form-control input-sm" name="person[task_rate]" type="number" inputmode="numeric" min="0" step="0.01" value="<%= @vm.task_rate %>" placeholder="0.34" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+  </form>
+</div>

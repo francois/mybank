@@ -9,6 +9,8 @@ end
 
 $LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
 
+require "change_salary"
+require "change_salary_view"
 require "env"
 require "home_view"
 require "new_revenue_view"
@@ -57,6 +59,19 @@ post "/:family_id/transactions/:child_id" do |family_id, child_id|
     description: transaction["description"],
     amount: BigDecimal(transaction["amount"]),
     posted_on: Date.parse(transaction["posted_on"]))
+  redirect "/#{family_id}"
+end
+
+get "/:family_id/person/:child_id/edit" do |family_id, child_id|
+  @vm = ChangeSalaryView.new(DB, TZ).call(family_id: family_id, id: child_id)
+  erb :change_salary, layout: :application
+end
+
+post "/:family_id/person/:child_id" do |family_id, child_id|
+  ChangeSalary.new(DB, TZ).call(
+    family_id: family_id,
+    id: child_id,
+    task_rate: BigDecimal(params["person"]["task_rate"]))
   redirect "/#{family_id}"
 end
 
