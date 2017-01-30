@@ -7,8 +7,6 @@ class RecordNewRevenue
 
   attr_reader :db, :tz
 
-  NBSP = " " # non-breaking space
-
   def call(child_id:, unit_amount:, count:, posted_on:)
     db[:public__transactions].insert(
       child_id: child_id,

@@ -9,6 +9,8 @@ end
 
 $LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
 
+NBSP = " " # non-breaking space
+
 require "home_view"
 require "new_revenue_view"
 require "new_transaction_view"
@@ -72,6 +74,6 @@ end
 
 helpers do
   def format_amount(amount)
-    amount ? sprintf("%.2f", amount) : ""
+    amount ? sprintf("%.2f%s$", amount, NBSP) : ""
   end
 end
