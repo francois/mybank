@@ -12,18 +12,20 @@ class ApplyPerChildInterests < BaseAction
     interests = ds.map do |row|
       rate = 0.1 # TODO: Make configurable
 
-      child_id = row.fetch(:child_id)
-      balance  = row.fetch(:balance)
-      interest = balance * rate / 365
+      family_id = row.fetch(:family_id)
+      child_id  = row.fetch(:child_id)
+      balance   = row.fetch(:balance)
+      interest  = balance * rate / 365
 
-      [child_id,
+      [family_id,
+       child_id,
        Date.today,
        sprintf("Intérêts sur solde de %.2f%s$ (%.1f%%)", balance, NBSP, 100.0 * rate),
        interest.round(3)]
     end
 
     db[:public__transactions].import(
-      %i[child_id posted_on description amount],
+      %i[family_id child_id posted_on description amount],
       interests)
   end
 end
