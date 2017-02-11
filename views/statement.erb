@@ -1,7 +1,51 @@
 <div class="col-sm-12">
   <h1>État de compte</h1>
   <h2><%= @vm.person_name %> <%= @vm.today %></h2>
+</div>
 
+<div class="col-sm-12">
+  <p class="pull-right">
+  <a class="btn btn-primary btn-sm" href="/<%= @vm.family_id %>/person/<%= @vm.child_id %>/goals/new">Ajouter un but</a>
+  </p>
+  <h3>Buts</h3>
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Montant</th>
+        <th>3 tâche/sem.</th>
+        <th>9 tâche/sem.</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @vm.has_no_goals? %>
+        <tr>
+          <td colspan="4">
+            <p>Vous n'avez aucun but. <a href="/<%= @vm.family_id %>/person/<%= @vm.child_id %>/goals/new">Ajouter un but</a>.</p>
+          </td>
+        </tr>
+      <% end %>
+
+      <% @vm.each_goal do |goal| %>
+        <tr>
+          <td><%= goal.name %></td>
+          <td class="amount"><%= format_amount goal.amount %></td>
+          <td class="amount"><%= goal.weeks_to_reach_goal(balance: @vm.balance, tasks_per_week: 3) %></td>
+          <td class="amount"><%= goal.weeks_to_reach_goal(balance: @vm.balance, tasks_per_week: 9) %></td>
+          <td>
+            <form method="post" action="/<%= @vm.family_id %>/person/<%= @vm.child_id %>/goal/<%= goal.id %>">
+              <button type="submit" class="btn btn-primary btn-xs">But atteint!</button>
+          </form>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="col-sm-12">
+  <h3>Transactions</h3>
   <table class="table table-condensed">
     <col width="30%">
     <col>

@@ -1,8 +1,11 @@
 # coding: utf-8
 require "base_action"
 require "bigdecimal"
+require "interest_calculator"
 
 class ApplyPerChildInterests < BaseAction
+  include InterestCalculator
+
   def call
     ds = db[:public__transactions].
       group_by(:family_id, :child_id).
@@ -10,23 +13,17 @@ class ApplyPerChildInterests < BaseAction
       from_self.select(:family_id, :child_id, :sum___balance)
 
     interests = ds.map do |row|
-      rate = 0.1 # TODO: Make configurable
-
       family_id = row.fetch(:family_id)
       child_id  = row.fetch(:child_id)
       balance   = row.fetch(:balance)
-      interest  = balance * rate / 365
-      if interest < 0 then
-        interest = BigDecimal("-0.01") if interest > BigDecimal("-0.01")
-      else
-        interest = BigDecimal("0.01") if interest < BigDecimal("0.01")
-      end
+
+      daily_interest = calculate_daily_interest_on(balance)
 
       [family_id,
        child_id,
        today,
-       sprintf("Intérêts sur solde de %.2f%s$ (%.1f%%)", balance, NBSP, 100.0 * rate),
-       interest.round(3)]
+       sprintf("Intérêts sur solde de %.2f%s$ (%.1f%%)", balance, NBSP, 100.0 * interest_rate),
+       daily_interest.round(3)]
     end
 
     db[:public__transactions].import(

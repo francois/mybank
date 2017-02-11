@@ -1,13 +1,22 @@
 # coding: utf-8
 
 class StatementPresenter
-  def initialize(person:, today:, transactions:)
+  def initialize(person:, today:, transactions:, goals:)
     @person       = person
     @today        = today
     @transactions = transactions
+    @goals        = goals
   end
 
-  attr_reader :person, :today, :transactions
+  attr_reader :person, :today, :transactions, :goals
+
+  def family_id
+    person.family_id
+  end
+
+  def child_id
+    person.id
+  end
 
   def person_name
     person.name
@@ -17,8 +26,16 @@ class StatementPresenter
     transactions.map(&:amount).reduce(&:+)
   end
 
+  def each_goal(&block)
+    goals.each(&block)
+  end
+
   def each_transaction(&block)
     transactions.each(&block)
+  end
+
+  def has_no_goals?
+    goals.empty?
   end
 
   def title

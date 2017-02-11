@@ -11,10 +11,13 @@ $LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
 
 require "change_salary"
 require "change_salary_view"
+require "delete_goal"
 require "env"
 require "home_view"
+require "new_goal_view"
 require "new_revenue_view"
 require "new_transaction_view"
+require "record_new_goal"
 require "record_new_revenue"
 require "record_new_transaction"
 require "statement_view"
@@ -73,6 +76,29 @@ post "/:family_id/person/:child_id" do |family_id, child_id|
     id: child_id,
     task_rate: BigDecimal(params["person"]["task_rate"]))
   redirect "/#{family_id}"
+end
+
+get "/:family_id/person/:child_id/goals/new" do |family_id, child_id|
+  @vm = NewGoalView.new(DB, TZ).call(family_id: family_id, child_id: child_id)
+  erb :new_goal, layout: :application
+end
+
+post "/:family_id/person/:child_id/goal/:goal_id" do |family_id, child_id, goal_id|
+  DeleteGoal.new(DB, TZ).call(
+    family_id: family_id,
+    child_id: child_id,
+    id: goal_id)
+  redirect "/#{family_id}/transactions/#{child_id}"
+end
+
+post "/:family_id/person/:child_id/goals" do |family_id, child_id|
+  RecordNewGoal.new(DB, TZ).call(
+    family_id: family_id,
+    child_id: child_id,
+    name: params["goal"]["name"],
+    amount: BigDecimal(params["goal"]["amount"]))
+
+  redirect "/#{family_id}/transactions/#{child_id}"
 end
 
 helpers do

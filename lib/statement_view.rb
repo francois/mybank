@@ -1,4 +1,5 @@
 require "base_action"
+require "goal"
 require "statement_presenter"
 require "transaction"
 
@@ -22,6 +23,23 @@ class StatementView < BaseAction
         posted_on: txn.fetch(:posted_on))
     end
 
-    StatementPresenter.new(person: person, today: today, transactions: transactions)
+    goal_rows = db[:public__goals].
+      filter(child_id: child_id).
+      order{ lower(name) }.
+      all
+
+    goals = goal_rows.map do |row|
+      Goal.new(id: row.fetch(:id),
+               child_id: row.fetch(:child_id),
+               name: row.fetch(:name),
+               amount: row.fetch(:amount),
+               task_rate: person.task_rate)
+    end
+
+    StatementPresenter.new(
+      person: person,
+      today: today,
+      transactions: transactions,
+      goals: goals)
   end
 end
