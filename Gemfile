@@ -1,5 +1,5 @@
 source "https://rubygems.org"
-ruby "2.3.3"
+ruby "2.6.6"
 
 gem "dotenv", groups: %i[development test]
 gem "foreman", groups: %i[development test]
