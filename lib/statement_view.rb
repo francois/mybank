@@ -11,7 +11,7 @@ class StatementView < BaseAction
       select_all(:transactions).
       select_append(Sequel.lit("sum(amount) OVER (ORDER BY posted_on, created_at)").as(:running_balance)).
       filter(child_id: child_id).
-      order(:posted_on, :created_at).
+      reverse_order(:posted_on, :created_at).
       all
 
     transactions = txns.map do |txn|
