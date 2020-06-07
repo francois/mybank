@@ -9,5 +9,5 @@ gem "rerun", groups: %i[development test]
 gem "sequel"
 gem "sequel_pg", require: false
 gem "sinatra"
-gem "thin"
+gem "puma"
 gem "tzinfo"
