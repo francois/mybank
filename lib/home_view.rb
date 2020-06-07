@@ -10,12 +10,12 @@ class HomeView
   attr_reader :db, :tz
 
   def call(family_id:)
-    children = db[:public__children].
+    children = db[:children].
       filter(family_id: family_id).
       order{ lower(name) }.
       map{|row| Person.new(family_id: row.fetch(:family_id), id: row.fetch(:id), name: row.fetch(:name), task_rate: row.fetch(:task_rate))}
 
-    balances = db[:public__transactions].
+    balances = db[:transactions].
       group_by(:child_id).
       select{ [child_id, sum(amount)] }.
       from_self.select_hash(:child_id, :sum)

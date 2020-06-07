@@ -5,7 +5,7 @@ class RecordNewRevenue < BaseAction
   def call(family_id:, child_id:, count:, posted_on:)
     person = find_person_with_id(family_id: family_id, id: child_id)
 
-    db[:public__transactions].insert(
+    db[:transactions].insert(
       family_id: person.family_id,
       child_id: person.id,
       amount: person.task_rate * count,

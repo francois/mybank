@@ -7,7 +7,7 @@ class ApplyPerChildInterests < BaseAction
   include InterestCalculator
 
   def call
-    ds = db[:public__transactions].
+    ds = db[:transactions].
       group_by(:family_id, :child_id).
       select{ [family_id, child_id, sum(amount)] }.
       from_self.select(:family_id, :child_id, :sum___balance)
@@ -26,7 +26,7 @@ class ApplyPerChildInterests < BaseAction
        daily_interest.round(3)]
     end
 
-    db[:public__transactions].import(
+    db[:transactions].import(
       %i[family_id child_id posted_on description amount],
       interests)
   end

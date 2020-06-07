@@ -7,7 +7,7 @@ class StatementView < BaseAction
   def call(family_id:, child_id:)
     person = find_person_with_id(family_id: family_id, id: child_id)
 
-    txns = db[:public__transactions].
+    txns = db[:transactions].
       select_all(:transactions).
       select_append(Sequel.lit("sum(amount) OVER (ORDER BY posted_on, created_at)").as(:running_balance)).
       filter(child_id: child_id).
@@ -23,7 +23,7 @@ class StatementView < BaseAction
         posted_on: txn.fetch(:posted_on))
     end
 
-    goal_rows = db[:public__goals].
+    goal_rows = db[:goals].
       filter(child_id: child_id).
       order{ lower(name) }.
       all
